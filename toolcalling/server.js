@@ -8,8 +8,8 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', () => {
-    console.log('hello how can i assist you');
+app.get('/', (req, res) => {
+    res.send('hello how can i assist you');
 
 })
 
