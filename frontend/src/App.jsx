@@ -22,7 +22,7 @@ const App = () => {
     setmessage(prev => [...prev, { role: "ai", text: "" }]);
 
     try {
-      const response = await fetch('http://localhost:3001/chat', {
+      const response = await fetch('https://jodo-ai.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, roomId }),
