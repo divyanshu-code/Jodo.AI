@@ -13,7 +13,12 @@ It is structured as a monorepo containing a modern React frontend and a robust N
 - **Server-Sent Events (SSE) Streaming**: Delivers answers token-by-token for a smooth, conversational, and instant user experience.
 - **Modern React Chat Interface**: Beautiful dark-themed React 19 web app featuring markdown rendering, syntax highlighting for code snippets, a clean input area, and responsive layouts styled with Tailwind CSS v4.
 - **Intelligent LLM Broker**: Powered by Groq's high-speed `llama-3.1-8b-instant` model.
-
+- **Hybrid Search (Vector + Keyword)**: Combines vector similarity search with traditional keyword search for improved retrieval accuracy.
+- **Intelligent Reranking**: Improves the relevance of search results by re-ranking them based on contextual understanding.
+- **Multi-Layer Redis Caching**: Implements caching at multiple levels to optimize performance and reduce latency.
+- **Multi-Namespace Organization**: Organizes Redis keys into namespaces for better management and scalability.
+- **Batch Processing & Pagination**: Supports batch processing of requests and pagination for efficient data handling.
+- **Efficient PDF Ingestion Pipeline**: Optimized workflow for processing and indexing PDF documents.
 ---
 
 ## Tech Stack
@@ -31,7 +36,7 @@ It is structured as a monorepo containing a modern React frontend and a robust N
 *   **Vector Database**: Pinecone Database
 *   **LLM Provider**: Groq SDK (`llama-3.1-8b-instant`)
 *   **Search Tool**: Tavily Core API
-*   **Memory**: Node-Cache (temporary session cache mapping messages to room IDs)
+*   **Memory**: redis-Cache (temporary session cache mapping messages to room IDs)
 
 ## Architecture Layers
 
