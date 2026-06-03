@@ -12,7 +12,7 @@ It is structured as a monorepo containing a modern React frontend and a robust N
 - **Dynamic Tool Calling**: Uses the Tavily Search API to execute real-time web searches silently if the local document context is insufficient or if up-to-date internet knowledge is required.
 - **Server-Sent Events (SSE) Streaming**: Delivers answers token-by-token for a smooth, conversational, and instant user experience.
 - **Modern React Chat Interface**: Beautiful dark-themed React 19 web app featuring markdown rendering, syntax highlighting for code snippets, a clean input area, and responsive layouts styled with Tailwind CSS v4.
-- **Intelligent LLM Broker**: Powered by Groq's high-speed `llama-3.3-70b-versatile` model.
+- **Intelligent LLM Broker**: Powered by Groq's high-speed `llama-3.1-8b-instant` model.
 
 ---
 
@@ -64,7 +64,7 @@ It is structured as a monorepo containing a modern React frontend and a robust N
 - **Caching**: Redis session & RAG cache
 
 ### Layer 5: LLM & Tools
-- **Groq API**: Main inference engine (Llama 3.3)
+- **Groq API**: Main inference engine (Llama 3.1-8b-instant)
 - **Tavily API**: Real-time web search tool
 - **Hugging Face**: Embedding model (Xenova)
 
@@ -308,7 +308,7 @@ graph TD
     Backend -->|7. Hybrid Search BM25| Backend
     Backend -->|8. Rerank Results| Backend
     Backend -->|9. Build Prompt| Backend
-    Backend -->|10. Stream Response| Groq[Groq API: Llama 3.3]
+    Backend -->|10. Stream Response| Groq[Groq API: Llama 3.1-8b-instant]
     Groq -->|11. Tool Check| Groq
     Groq -->|12. Web Search if Needed| Tavily[Tavily Search API]
     Tavily -->|13. Search Results| Groq
@@ -359,7 +359,7 @@ graph TD
 - Includes formatting instructions (markdown, code blocks, etc.)
 
 #### Step 7: LLM Generation with Tool Calling
-- Backend calls Groq API (Llama 3.3 70B model) with constructed prompt
+- Backend calls Groq API (llama-3.1-8b-instant) with constructed prompt
 - Groq processes and determines if:
   - **Question answerable from context**: Returns direct answer
   - **Question requires current info**: Calls `tavily_search` tool automatically
@@ -417,7 +417,7 @@ graph TD
 
 | Service | Role | API |
 |---------|------|-----|
-| **Groq** | LLM inference engine | llama-3.3-70b-versatile |
+| **Groq** | LLM inference engine | llama-3.1-8b-instant |
 | **Pinecone** | Vector database for embeddings | REST API |
 | **Tavily** | Real-time web search | Tavily Core API |
 | **Hugging Face** | Embedding model (runs locally) | `Xenova/all-MiniLM-L6-v2` |
@@ -545,9 +545,6 @@ HOST=0.0.0.0
 ### Optimization Tips
 1. **Reduce vector search latency**: Use Pinecone's pod size (`s1`, `p1`, `p2`)
 2. **Reduce reranking time**: Lower `topK` in reranker
-3. **Cache frequently asked questions**: Redis caching enabled by default
-4. **Use cheaper LLM**: Switch to `llama-3.1-8b-instant` for lower cost
-5. **Batch requests**: Process multiple queries at once via Groq batch API
 
 ---
 
