@@ -1,6 +1,7 @@
 import express from 'express'
 import { generate } from './index.js';
 import cors from 'cors'
+import { deleteConversation, flushRAGCache } from './redis.js';
 
 const app = express()
 const port = 3001;
@@ -48,12 +49,33 @@ app.post('/chat', async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        res.write(`data: ${JSON.stringify({ chunk: "Something went wrong." })}\n\n`);
+
+        const errorMessage = err.error?.message || err.message || "Something went wrong";
+        res.write(`data: ${JSON.stringify({ 
+            chunk: `Error: ${errorMessage}`, 
+            isError: true 
+        })}\n\n`);
         res.write(`data: [DONE]\n\n`);
         res.end();
     }
-
 })
+
+app.post('/clear', async (req, res) => {
+    const { roomId } = req.body;
+    if (!roomId) return res.status(400).json({ message: 'roomId required' });
+    await deleteConversation(roomId);
+    res.json({ message: 'Conversation cleared' });
+});
+
+// Clear all RAG cache (run after indexing new documents)
+// After indexing a new PDF → node flush-rag-cache
+// Otherwise old cached results might be returned
+// instead of new document content
+
+app.post('/flush-rag-cache', async (req, res) => {
+    await flushRAGCache();
+    res.json({ message: 'RAG cache cleared' });
+});
 
 app.listen(port, '0.0.0.0', () => {      
     console.log(`Server running on port ${port}`);

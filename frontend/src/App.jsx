@@ -9,6 +9,8 @@ const App = () => {
 
   const [thinking, setthinking] = useState(false);
 
+  const [error, setError] = useState(null);
+
   const inputRef = useRef(null);
 
   const [roomId] = useState(() =>
@@ -17,16 +19,21 @@ const App = () => {
 
   async function generate(text) {
     setthinking(true);
+    setError(null);
 
     // Add empty AI message placeholder — we'll fill it as chunks arrive
     setmessage(prev => [...prev, { role: "ai", text: "" }]);
 
     try {
-      const response = await fetch('https://jodo-ai.onrender.com/chat', {
+      const response = await fetch('http://localhost:3001/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, roomId }),
       });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -50,6 +57,12 @@ const App = () => {
           try {
             const parsed = JSON.parse(data);
 
+            if (parsed.isError) {
+              setError(parsed.chunk);
+              setthinking(false);
+              break;
+            }
+
             // Append each chunk to the last AI message
             setmessage(prev => {
               const updated = [...prev];
@@ -63,12 +76,13 @@ const App = () => {
               return updated;
             });
 
-          } catch {  }
+          } catch { }
         }
       }
 
     } catch (err) {
       setthinking(false);
+      setError(`Network Error: ${err.message}`);
       console.error(err);
     }
   }
@@ -78,14 +92,13 @@ const App = () => {
     if (e.key === 'Enter' && !e.shiftKey) {
       handleclick();
     }
-
   }
 
   const handleclick = (e) => {
     const text = inputRef.current.value.trim();
 
     if (!text) return;
-    
+
     setmessage(prev => [...prev, { role: "user", text }]);
     inputRef.current.value = "";
     generate(text);
@@ -94,6 +107,18 @@ const App = () => {
   return (
 
     <div className='container mx-auto max-w-3xl pb-35'>
+
+      {error && (
+        <div className='mx-2 my-3 p-3 bg-red-900/30 border flex justify-between border-red-600 rounded-lg text-red-400 text-sm'>
+          {error}
+          <button
+            onClick={() => setError(null)}
+            className='ml-2 cursor-pointer text-red-300 hover:text-red-200  text-xs'
+          >
+            X
+          </button>
+        </div>
+      )}
 
       <div className='my-10'>
         {message.map((msg, i) => (

@@ -13,13 +13,15 @@ const pinecone = new PineconeClient();                     // by default reading
 
 const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME)
 
-const filepath = './ESSentr_Company_Policy_Document.pdf'
+export async function fileload(filepath , namespace = '') {
 
-export async function fileload(filepath) {
+  console.log("Loading file from:", filepath);
 
-  const data = new PDFLoader(filepath, { splitPages: false })
-
+  const data = new PDFLoader(filepath)
   const doc = await data.load()
+
+  console.log("Pages loaded:", doc.length);
+  console.log("Content length:", doc[0]?.pageContent?.length);
 
   if (!doc[0]?.pageContent?.trim()) {
     throw new Error("PDF content is empty — check if the PDF is scanned/image-based.");
@@ -58,7 +60,7 @@ export async function fileload(filepath) {
   for (let i = 0; i < allRecords.length; i += batchSize) {
     const batch = allRecords.slice(i, i + batchSize);
 
-    await pineconeIndex.namespace('').upsert({ records: batch }); 
+    await pineconeIndex.namespace(namespace).upsert({ records: batch }); 
     console.log(`Upserted ${Math.min(i + batchSize, allRecords.length)} / ${allRecords.length} /n`);
   }
 
