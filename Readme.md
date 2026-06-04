@@ -550,7 +550,7 @@ HOST=0.0.0.0
 ### Optimization Tips
 1. **Reduce vector search latency**: Use Pinecone's pod size (`s1`, `p1`, `p2`)
 2. **Reduce reranking time**: Lower `topK` in reranker
-
+3. **Upload document functionality**: user can upload document and get detailed answer from it with conversation history.
 ---
 
 ## Deployment Guide

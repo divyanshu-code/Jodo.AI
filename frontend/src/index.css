@@ -1,19 +1,49 @@
 @import "tailwindcss";
 
-*{
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --color-bg: #000000;
+  --color-surface-1: #0A0A0A;
+  --color-surface-2: #111111;
+  --color-surface-3: #1A1A1A;
+  --color-accent: #6366F1;
+  --color-accent-light: #818CF8;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #52525B;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-glow: rgba(99, 102, 241, 0.15);
+}
+
+* {
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
-body{
-   margin: 0;
-   padding: 0;
-   background-color: black;
-   color: white;
-   overflow-x: hidden;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-::-webkit-scrollbar{
-   
-  display: none ;
+/* Custom thin indigo scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
 }
