@@ -406,7 +406,7 @@ const App = () => {
                 onMouseLeave={(e) => e.currentTarget.style.color = '#52525B'}
                 title="Upload File"
               >
-                <input type="file" name="file" id="file" className="hidden" onChange={handleFileChange} />
+                {/* <input type="file" name="file" id="file" className="hidden" onChange={handleFileChange} /> */}
                 <Paperclip onClick={(e) => document.getElementById("file").click()} className="w-5 h-5" />
               </button>
 
