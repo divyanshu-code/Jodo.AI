@@ -109,11 +109,13 @@ const App = () => {
     <div className='container mx-auto max-w-3xl pb-35'>
 
       {error && (
-        <div className='mx-2 my-3 p-3 bg-red-900/30 border flex justify-between border-red-600 rounded-lg text-red-400 text-sm'>
-          {error}
+        <div className='lg:w-full lg:max-w-3xl  mx-auto w-[90vw]  my-3 p-3 bg-red-900/30 border border-red-600 rounded-lg text-red-400 text-sm flex items-center justify-between gap-4'>
+          <div className='overflow-x-auto whitespace-nowrap min-w-0 flex-1'>
+            {error}
+          </div>
           <button
             onClick={() => setError(null)}
-            className='ml-2 cursor-pointer text-red-300 hover:text-red-200  text-xs'
+            className='cursor-pointer text-red-300 hover:text-red-200 text-xs font-bold p-1'
           >
             X
           </button>
@@ -132,7 +134,7 @@ const App = () => {
               // User messages → plain text is fine
               <p>{msg.text}</p>
             ) : (
-              // AI messages → render markdown properly
+              // AI messages render markdown properly
               <ReactMarkdown
                 components={{
                   // Code blocks
