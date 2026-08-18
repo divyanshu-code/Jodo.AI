@@ -298,7 +298,7 @@ export async function generate(usermessage, roomId, onChunk, onDone) {
     const stream = await groq.chat.completions.create({
         temperature: 1,
         messages: resolvedMessages,
-        model: "llama-3.1-8b-instant",
+        model: "openai/gpt-oss-120b",
         stream: true,   //  streaming enabled here
     });
 
