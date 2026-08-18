@@ -244,7 +244,7 @@ const App = () => {
 
           <div className="flex items-center gap-2 flex-1 justify-end">
             <div className="px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-medium" style={{ backgroundColor: '#111111', border: '1px solid rgba(255,255,255,0.06)', color: '#A1A1AA' }}>
-              <span>Llama 3.1-8b-instant</span>
+              <span>openai/gpt-oss-120b</span>
               <div className="w-[1px] h-3 bg-white/20 mx-1"></div>
               <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" style={{ boxShadow: '0 0 12px 2px rgba(34,197,94,0.6)' }}></span>
               <span>RAG</span>
@@ -438,7 +438,7 @@ const App = () => {
             {/* Model Selector Row */}
             <div className="flex items-center justify-between px-3 pb-1">
               <button className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors hover:bg-white/5 cursor-pointer" style={{ color: '#A1A1AA' }}>
-                Llama 3.1-8b-instant
+                openai/gpt-oss-120b
 
               </button>
             </div>
